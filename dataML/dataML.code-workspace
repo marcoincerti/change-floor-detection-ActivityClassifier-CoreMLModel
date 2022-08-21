@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../DATAFORML/50/claim"
+		},
+		{
+			"path": "../DATAFORML/50/descend"
+		},
+		{
+			"path": "../DATAFORML/50/stay"
+		}
+	],
+	"settings": {
+		"files.autoSave": "afterDelay"
+	}
+}
