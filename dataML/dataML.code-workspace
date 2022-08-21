@@ -4,13 +4,16 @@
 			"path": "."
 		},
 		{
-			"path": "../DATAFORML/50/claim"
+			"path": "../Dataset/50 Hz/claim"
 		},
 		{
-			"path": "../DATAFORML/50/descend"
+			"path": "../Dataset/50 Hz/descend"
 		},
 		{
-			"path": "../DATAFORML/50/stay"
+			"path": "../Dataset/50 Hz/elevator_up"
+		},
+		{
+			"path": "../Dataset/50 Hz/stay"
 		}
 	],
 	"settings": {
