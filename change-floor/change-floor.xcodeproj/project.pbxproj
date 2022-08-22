@@ -14,7 +14,7 @@
 		84EB460128B268FB0030133A /* change_floorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB460028B268FB0030133A /* change_floorTests.swift */; };
 		84EB460B28B268FB0030133A /* change_floorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB460A28B268FB0030133A /* change_floorUITests.swift */; };
 		84EB460D28B268FB0030133A /* change_floorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB460C28B268FB0030133A /* change_floorUITestsLaunchTests.swift */; };
-		84EB462528B2CD190030133A /* MyActivityClassifier4.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 84EB462428B2CD190030133A /* MyActivityClassifier4.mlmodel */; };
+		84EB462728B3B4090030133A /* MyActivityClassifier_9.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 84EB462628B3B4090030133A /* MyActivityClassifier_9.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +45,7 @@
 		84EB460628B268FB0030133A /* change-floorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "change-floorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EB460A28B268FB0030133A /* change_floorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorUITests.swift; sourceTree = "<group>"; };
 		84EB460C28B268FB0030133A /* change_floorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		84EB462428B2CD190030133A /* MyActivityClassifier4.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier4.mlmodel; path = ../../MyActivityClassifier4.mlmodel; sourceTree = "<group>"; };
+		84EB462628B3B4090030133A /* MyActivityClassifier_9.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier_9.mlmodel; path = ../../MyActivityClassifier_9.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 		84EB45EE28B268F80030133A /* change-floor */ = {
 			isa = PBXGroup;
 			children = (
-				84EB462428B2CD190030133A /* MyActivityClassifier4.mlmodel */,
+				84EB462628B3B4090030133A /* MyActivityClassifier_9.mlmodel */,
 				84EB45EF28B268F80030133A /* change_floorApp.swift */,
 				84EB45F128B268F80030133A /* ContentView.swift */,
 				84EB45F328B268FB0030133A /* Assets.xcassets */,
@@ -261,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84EB45F228B268F80030133A /* ContentView.swift in Sources */,
-				84EB462528B2CD190030133A /* MyActivityClassifier4.mlmodel in Sources */,
+				84EB462728B3B4090030133A /* MyActivityClassifier_9.mlmodel in Sources */,
 				84EB45F028B268F80030133A /* change_floorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

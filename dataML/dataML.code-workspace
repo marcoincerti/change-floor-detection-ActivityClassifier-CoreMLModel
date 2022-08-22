@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "../Dataset/50 Hz/stay"
+		},
+		{
+			"path": "../Dataset/20Hz/claim_20"
 		}
 	],
 	"settings": {
