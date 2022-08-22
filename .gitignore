@@ -1,13 +1,13 @@
 ### macOS ###
 # General
-.DS_Store
-.AppleDouble
-.LSOverride
+*.DS_Store
+*.AppleDouble
+*.LSOverride
 
 .zip
 
-/test
-/train
+test/
+train/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
