@@ -10,14 +10,14 @@ import CoreML
 import CoreMotion
 
 struct ModelConstants {
-    static let predictionWindowSize = 150
+    static let predictionWindowSize = 200
     static let sensorsUpdateInterval = 1.0 / 50.0
     static let stateInLength = 400
 }
 
 
 class ModelPrediction{
-    let activityClassificationModel: MyActivityClassifier_9 = try! MyActivityClassifier_9(configuration: .init())
+    let activityClassificationModel: MyActivityClassifier12 = try! MyActivityClassifier12(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
@@ -40,7 +40,6 @@ class ModelPrediction{
         
         // Update the state vector
         stateOutput = modelPrediction.stateOut
-        print(modelPrediction.labelProbability)
         // Return the predicted activity - the activity with the highest probability
         return modelPrediction.labelProbability
     }
@@ -81,9 +80,11 @@ struct ContentView: View {
     let motionManager = CMMotionManager()
     let altimeter = CMAltimeter()
     @State var relativealtitude: Double = 0.0
+    @State var prev_relative: Double = 0.0
     @State var pressure: Double = 0.0
     @State var prev_pressure: Double = 0.0
     @State var firstTime = true
+    @State var firstTime_2 = true
     
     @State var label: [String : Double] = ["mhhh":100]
     
@@ -100,8 +101,14 @@ struct ContentView: View {
             let tmp_altitude = dataAltimeter.relativeAltitude as! Double
             let tmp_pressure = dataAltimeter.pressure as! Double
             
-            if tmp_altitude - relativealtitude != 0{
-                relativealtitude = tmp_altitude - relativealtitude
+            if firstTime_2 {
+                prev_relative = tmp_altitude
+                firstTime_2 = false
+            }
+            
+            if tmp_altitude - prev_relative != 0{
+                relativealtitude = tmp_altitude - prev_relative
+                prev_relative = tmp_altitude
             }
             
             if firstTime {
@@ -113,20 +120,20 @@ struct ContentView: View {
                 pressure = tmp_pressure - prev_pressure
                 prev_pressure = tmp_pressure
             }
+            print(tmp_altitude, relativealtitude)
         }
         
         motionManager.startDeviceMotionUpdates(to: .main){ dataMotion, error in
             guard let dataMotion = dataMotion else { return }
-            print(relativealtitude, pressure)
             guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativeAltitude: relativealtitude, pressure: pressure) else { return }
             label = data
-            print(label)
         }
         
     }
     
     var body: some View {
         VStack{
+            Text(String(relativealtitude))
             List {
                 ForEach(label.sorted(by: >), id: \.key) { key, value in
                     Section(header: Text(key)) {
