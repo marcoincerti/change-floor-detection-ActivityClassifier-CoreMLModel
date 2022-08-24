@@ -6,8 +6,8 @@
 
 .zip
 
-test/
-train/
+dataML/test/
+dataML/test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
