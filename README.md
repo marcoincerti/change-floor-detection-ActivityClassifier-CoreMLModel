@@ -7,8 +7,8 @@ The model tries to **classify** the raw data it captures at that instant using a
 - [x] Stay
 - [x] Climb
 - [x] Descend
-- [] Elevator up
-- [] Elevator down
+- [ ] Elevator up
+- [ ] Elevator down
   
 ## Step one: Data collection
 
@@ -18,8 +18,18 @@ So I downloaded the CoreMotionData Recorder app and started recording data from 
 The data is recorded at a frequency of **50Hz**.
 All data collected are from Swift's core Data family.
 
-## Step two: DataCleaning
+## Step two: Data Cleaning
 
 In the **prepaire_data.py** file I made a simple script to filter out data that had an incorrect relativeAltitude, I also calculated the differences of the relativeAltitude and pressure so that I had the difference from the previous record.
 
 Finally after a thousand attempts I identified which features are the most relevant and created two folders: the **train** and **test** folders via the turicreate package.
+The features I use to train the model are:
+
+- acceleration x (without gravity)
+- acceleration v (without gravity)
+- acceleration z (without gravity)
+- altitude pressure (difference)
+- relativeAltitude (difference)
+- rotationRate y
+- rotationRate v
+- rotationRate z
