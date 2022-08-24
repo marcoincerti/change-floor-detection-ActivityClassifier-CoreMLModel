@@ -10,14 +10,14 @@ import CoreML
 import CoreMotion
 
 struct ModelConstants {
-    static let predictionWindowSize = 200
+    static let predictionWindowSize = 150
     static let sensorsUpdateInterval = 1.0 / 50.0
     static let stateInLength = 400
 }
 
 
 class ModelPrediction{
-    let activityClassificationModel: MyActivityClassifier12 = try! MyActivityClassifier12(configuration: .init())
+    let activityClassificationModel: MyActivityClassifier13 = try! MyActivityClassifier13(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
