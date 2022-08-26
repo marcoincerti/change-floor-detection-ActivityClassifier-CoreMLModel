@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		842F3D5328B5149300286C6C /* MyActivityClassifier12.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 842F3D5228B5149300286C6C /* MyActivityClassifier12.mlmodel */; };
-		842F3D5528B51A9C00286C6C /* MyActivityClassifier13.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 842F3D5428B51A9C00286C6C /* MyActivityClassifier13.mlmodel */; };
+		8498781D28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */; };
 		84EB45F028B268F80030133A /* change_floorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45EF28B268F80030133A /* change_floorApp.swift */; };
 		84EB45F228B268F80030133A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45F128B268F80030133A /* ContentView.swift */; };
 		84EB45F428B268FB0030133A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84EB45F328B268FB0030133A /* Assets.xcassets */; };
@@ -36,8 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		842F3D5228B5149300286C6C /* MyActivityClassifier12.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier12.mlmodel; path = ../../MyActivityClassifier12.mlmodel; sourceTree = "<group>"; };
-		842F3D5428B51A9C00286C6C /* MyActivityClassifier13.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier13.mlmodel; path = ../../MyActivityClassifier13.mlmodel; sourceTree = "<group>"; };
+		8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier15.mlmodel; path = ../../MyActivityClassifier15.mlmodel; sourceTree = "<group>"; };
 		84EB45EC28B268F80030133A /* change-floor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "change-floor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EB45EF28B268F80030133A /* change_floorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorApp.swift; sourceTree = "<group>"; };
 		84EB45F128B268F80030133A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,8 +96,7 @@
 		84EB45EE28B268F80030133A /* change-floor */ = {
 			isa = PBXGroup;
 			children = (
-				842F3D5228B5149300286C6C /* MyActivityClassifier12.mlmodel */,
-				842F3D5428B51A9C00286C6C /* MyActivityClassifier13.mlmodel */,
+				8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */,
 				84EB45EF28B268F80030133A /* change_floorApp.swift */,
 				84EB45F128B268F80030133A /* ContentView.swift */,
 				84EB45F328B268FB0030133A /* Assets.xcassets */,
@@ -263,9 +260,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842F3D5328B5149300286C6C /* MyActivityClassifier12.mlmodel in Sources */,
 				84EB45F228B268F80030133A /* ContentView.swift in Sources */,
-				842F3D5528B51A9C00286C6C /* MyActivityClassifier13.mlmodel in Sources */,
+				8498781D28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel in Sources */,
 				84EB45F028B268F80030133A /* change_floorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ struct ModelConstants {
 
 
 class ModelPrediction{
-    let activityClassificationModel: MyActivityClassifier13 = try! MyActivityClassifier13(configuration: .init())
+    let activityClassificationModel: MyActivityClassifier15 = try! MyActivityClassifier15(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
@@ -34,17 +34,17 @@ class ModelPrediction{
     var stateOutput = try! MLMultiArray(shape:[ModelConstants.stateInLength as NSNumber], dataType: MLMultiArrayDataType.double)
     
     
-    func performModelPrediction () -> [String : Double]? {
+    func performModelPrediction () -> MyActivityClassifier15Output? {
         // Perform model prediction
         let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, altitude_pressure: pressureData, relativeAltitude: altitudeRelativeData, rotationRate_x: gyroDataX, rotationRate_y: gyroDataY, rotationRate_z:gyroDataZ, stateIn: stateOutput)
         
         // Update the state vector
         stateOutput = modelPrediction.stateOut
         // Return the predicted activity - the activity with the highest probability
-        return modelPrediction.labelProbability
+        return modelPrediction
     }
     
-    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativeAltitude: Double, pressure: Double) -> [String : Double]? {
+    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativeAltitude: Double, pressure: Double) -> MyActivityClassifier15Output? {
         // Add the current accelerometer reading to the data array
         accelDataX[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.x as NSNumber
         accelDataY[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.y as NSNumber
@@ -86,7 +86,8 @@ struct ContentView: View {
     @State var firstTime = true
     @State var firstTime_2 = true
     
-    @State var label: [String : Double] = ["mhhh":100]
+    @State var dict_prob: [String : Double] = ["mhhh":100]
+    @State var label_predict: String = "mhhh"
     
     func startSensors() {
         guard motionManager.isAccelerometerAvailable, motionManager.isGyroAvailable, motionManager.isDeviceMotionAvailable, CMAltimeter.isRelativeAltitudeAvailable() else { return }
@@ -126,16 +127,17 @@ struct ContentView: View {
         motionManager.startDeviceMotionUpdates(to: .main){ dataMotion, error in
             guard let dataMotion = dataMotion else { return }
             guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativeAltitude: relativealtitude, pressure: pressure) else { return }
-            label = data
+            dict_prob = data.labelProbability
+            label_predict = data.label
         }
         
     }
     
     var body: some View {
         VStack{
-            Text(String(relativealtitude))
+            Text(String(label_predict))
             List {
-                ForEach(label.sorted(by: >), id: \.key) { key, value in
+                ForEach(dict_prob.sorted(by: >), id: \.key) { key, value in
                     Section(header: Text(key)) {
                         Text(String(value))
                     }
