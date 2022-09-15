@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8498781D28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */; };
+		8451283A28CF685A00CBFD27 /* MyActivityClassifier_27.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8451283928CF685A00CBFD27 /* MyActivityClassifier_27.mlmodel */; };
 		84EB45F028B268F80030133A /* change_floorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45EF28B268F80030133A /* change_floorApp.swift */; };
 		84EB45F228B268F80030133A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45F128B268F80030133A /* ContentView.swift */; };
 		84EB45F428B268FB0030133A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84EB45F328B268FB0030133A /* Assets.xcassets */; };
@@ -35,7 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier15.mlmodel; path = ../../MyActivityClassifier15.mlmodel; sourceTree = "<group>"; };
+		8451283928CF685A00CBFD27 /* MyActivityClassifier_27.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MyActivityClassifier_27.mlmodel; path = ../../MyActivityClassifier_27.mlmodel; sourceTree = "<group>"; };
 		84EB45EC28B268F80030133A /* change-floor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "change-floor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EB45EF28B268F80030133A /* change_floorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorApp.swift; sourceTree = "<group>"; };
 		84EB45F128B268F80030133A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		84EB45EE28B268F80030133A /* change-floor */ = {
 			isa = PBXGroup;
 			children = (
-				8498781C28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel */,
+				8451283928CF685A00CBFD27 /* MyActivityClassifier_27.mlmodel */,
 				84EB45EF28B268F80030133A /* change_floorApp.swift */,
 				84EB45F128B268F80030133A /* ContentView.swift */,
 				84EB45F328B268FB0030133A /* Assets.xcassets */,
@@ -261,8 +261,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84EB45F228B268F80030133A /* ContentView.swift in Sources */,
-				8498781D28B7D65D00DF7072 /* MyActivityClassifier15.mlmodel in Sources */,
 				84EB45F028B268F80030133A /* change_floorApp.swift in Sources */,
+				8451283A28CF685A00CBFD27 /* MyActivityClassifier_27.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
