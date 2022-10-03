@@ -10,14 +10,14 @@ import CoreML
 import CoreMotion
 
 struct ModelConstants {
-    static let predictionWindowSize = 150
+    static let predictionWindowSize = 100
     static let sensorsUpdateInterval = 1.0 / 50.0
     static let stateInLength = 400
 }
 
 
 class ModelPrediction{
-    let activityClassificationModel: MyActivityClassifier_27 = try! MyActivityClassifier_27(configuration: .init())
+    let activityClassificationModel: changeFloorClassifier_10 = try! changeFloorClassifier_10(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
@@ -34,7 +34,7 @@ class ModelPrediction{
     var stateOutput = try! MLMultiArray(shape:[ModelConstants.stateInLength as NSNumber], dataType: MLMultiArrayDataType.double)
     
     
-    func performModelPrediction () -> MyActivityClassifier_27Output? {
+    func performModelPrediction () -> changeFloorClassifier_10Output? {
         // Perform model prediction
         let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, altitude_pressure: pressureData, relativeAltitude: altitudeRelativeData, rotationRate_x: gyroDataX, rotationRate_y: gyroDataY, rotationRate_z:gyroDataZ, stateIn: stateOutput)
         
@@ -44,7 +44,7 @@ class ModelPrediction{
         return modelPrediction
     }
     
-    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativeAltitude: Double, pressure: Double) -> MyActivityClassifier_27Output? {
+    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativeAltitude: Double, pressure: Double) -> changeFloorClassifier_10Output? {
         // Add the current accelerometer reading to the data array
         accelDataX[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.x as NSNumber
         accelDataY[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.y as NSNumber
