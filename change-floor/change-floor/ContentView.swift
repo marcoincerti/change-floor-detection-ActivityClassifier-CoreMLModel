@@ -10,14 +10,14 @@ import CoreML
 import CoreMotion
 
 struct ModelConstants {
-    static let predictionWindowSize = 100
+    static let predictionWindowSize = 250
     static let sensorsUpdateInterval = 1.0 / 50.0
     static let stateInLength = 400
 }
 
 
 class ModelPrediction{
-    let activityClassificationModel: changeFloorClassifier_10 = try! changeFloorClassifier_10(configuration: .init())
+    let activityClassificationModel: changeFloorClassifier23 = try! changeFloorClassifier23(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
@@ -29,14 +29,15 @@ class ModelPrediction{
     let gyroDataZ = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
     
     let altitudeRelativeData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
+    let differenceAltitudeRelativeData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
     let pressureData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
     
     var stateOutput = try! MLMultiArray(shape:[ModelConstants.stateInLength as NSNumber], dataType: MLMultiArrayDataType.double)
     
     
-    func performModelPrediction () -> changeFloorClassifier_10Output? {
+    func performModelPrediction () -> changeFloorClassifier23Output? {
         // Perform model prediction
-        let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, altitude_pressure: pressureData, relativeAltitude: altitudeRelativeData, rotationRate_x: gyroDataX, rotationRate_y: gyroDataY, rotationRate_z:gyroDataZ, stateIn: stateOutput)
+        let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, altitude_pressure: pressureData, differenceAltitude: differenceAltitudeRelativeData, rotationRate_x: gyroDataX, rotationRate_y: gyroDataY, rotationRate_z:gyroDataZ, stateIn: stateOutput)
         
         // Update the state vector
         stateOutput = modelPrediction.stateOut
@@ -44,7 +45,7 @@ class ModelPrediction{
         return modelPrediction
     }
     
-    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativeAltitude: Double, pressure: Double) -> changeFloorClassifier_10Output? {
+    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativealtitude: Double, diffRelativealtitude: Double, pressure: Double) -> changeFloorClassifier23Output? {
         // Add the current accelerometer reading to the data array
         accelDataX[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.x as NSNumber
         accelDataY[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.y as NSNumber
@@ -54,7 +55,8 @@ class ModelPrediction{
         gyroDataY[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.rotationRate.y as NSNumber
         gyroDataZ[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.rotationRate.z as NSNumber
         
-        altitudeRelativeData[[currentIndexInPredictionWindow] as [NSNumber]] = relativeAltitude as NSNumber
+        altitudeRelativeData[[currentIndexInPredictionWindow] as [NSNumber]] = relativealtitude as NSNumber
+        differenceAltitudeRelativeData[[currentIndexInPredictionWindow] as [NSNumber]] = diffRelativealtitude as NSNumber
         pressureData[[currentIndexInPredictionWindow] as [NSNumber]] = pressure as NSNumber
         
         
@@ -79,6 +81,7 @@ struct ContentView: View {
     let modelPredict = ModelPrediction()
     let motionManager = CMMotionManager()
     let altimeter = CMAltimeter()
+    @State var diffRelativealtitude: Double = 0.0
     @State var relativealtitude: Double = 0.0
     @State var prev_relative: Double = 0.0
     @State var pressure: Double = 0.0
@@ -92,14 +95,15 @@ struct ContentView: View {
     func startSensors() {
         guard motionManager.isAccelerometerAvailable, motionManager.isGyroAvailable, motionManager.isDeviceMotionAvailable, CMAltimeter.isRelativeAltitudeAvailable() else { return }
         
-        motionManager.accelerometerUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
-        motionManager.gyroUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
+        //motionManager.accelerometerUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
+        //motionManager.gyroUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
         motionManager.deviceMotionUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
         
         altimeter.startRelativeAltitudeUpdates(to: .main){ dataAltimeter, error in
             guard let dataAltimeter = dataAltimeter else {  return }
             
             let tmp_altitude = dataAltimeter.relativeAltitude as! Double
+            relativealtitude = dataAltimeter.relativeAltitude as! Double
             let tmp_pressure = dataAltimeter.pressure as! Double
             
             if firstTime_2 {
@@ -108,7 +112,7 @@ struct ContentView: View {
             }
             
             if tmp_altitude - prev_relative != 0{
-                relativealtitude = tmp_altitude - prev_relative
+                diffRelativealtitude = tmp_altitude - prev_relative
                 prev_relative = tmp_altitude
             }
             
@@ -121,12 +125,11 @@ struct ContentView: View {
                 pressure = tmp_pressure - prev_pressure
                 prev_pressure = tmp_pressure
             }
-            print(tmp_altitude, relativealtitude)
         }
         
         motionManager.startDeviceMotionUpdates(to: .main){ dataMotion, error in
             guard let dataMotion = dataMotion else { return }
-            guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativeAltitude: relativealtitude, pressure: pressure) else { return }
+            guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativealtitude: relativealtitude, diffRelativealtitude: diffRelativealtitude, pressure: pressure) else { return }
             dict_prob = data.labelProbability
             label_predict = data.label
         }

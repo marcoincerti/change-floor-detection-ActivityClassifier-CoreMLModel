@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8430803A28EB55B1004A82EA /* changeFloorClassifier_10.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8430803928EB55B1004A82EA /* changeFloorClassifier_10.mlmodel */; };
+		8466FDA828F880F100280C78 /* changeFloorClassifier22.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8466FDA728F880F100280C78 /* changeFloorClassifier22.mlmodel */; };
+		8466FDAA28F8857100280C78 /* changeFloorClassifier23.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8466FDA928F8857100280C78 /* changeFloorClassifier23.mlmodel */; };
 		84EB45F028B268F80030133A /* change_floorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45EF28B268F80030133A /* change_floorApp.swift */; };
 		84EB45F228B268F80030133A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45F128B268F80030133A /* ContentView.swift */; };
 		84EB45F428B268FB0030133A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84EB45F328B268FB0030133A /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		8430803928EB55B1004A82EA /* changeFloorClassifier_10.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier_10.mlmodel; path = ../../changeFloorClassifier_10.mlmodel; sourceTree = "<group>"; };
+		8466FDA728F880F100280C78 /* changeFloorClassifier22.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier22.mlmodel; path = ../../changeFloorClassifier22.mlmodel; sourceTree = "<group>"; };
+		8466FDA928F8857100280C78 /* changeFloorClassifier23.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier23.mlmodel; path = ../../changeFloorClassifier23.mlmodel; sourceTree = "<group>"; };
 		84EB45EC28B268F80030133A /* change-floor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "change-floor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EB45EF28B268F80030133A /* change_floorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorApp.swift; sourceTree = "<group>"; };
 		84EB45F128B268F80030133A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 		84EB45EE28B268F80030133A /* change-floor */ = {
 			isa = PBXGroup;
 			children = (
+				8466FDA928F8857100280C78 /* changeFloorClassifier23.mlmodel */,
+				8466FDA728F880F100280C78 /* changeFloorClassifier22.mlmodel */,
 				8430803928EB55B1004A82EA /* changeFloorClassifier_10.mlmodel */,
 				84EB45EF28B268F80030133A /* change_floorApp.swift */,
 				84EB45F128B268F80030133A /* ContentView.swift */,
@@ -260,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8466FDAA28F8857100280C78 /* changeFloorClassifier23.mlmodel in Sources */,
+				8466FDA828F880F100280C78 /* changeFloorClassifier22.mlmodel in Sources */,
 				84EB45F228B268F80030133A /* ContentView.swift in Sources */,
 				84EB45F028B268F80030133A /* change_floorApp.swift in Sources */,
 				8430803A28EB55B1004A82EA /* changeFloorClassifier_10.mlmodel in Sources */,
