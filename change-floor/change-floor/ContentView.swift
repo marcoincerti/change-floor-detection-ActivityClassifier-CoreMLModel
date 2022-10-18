@@ -10,14 +10,14 @@ import CoreML
 import CoreMotion
 
 struct ModelConstants {
-    static let predictionWindowSize = 250
+    static let predictionWindowSize = 200
     static let sensorsUpdateInterval = 1.0 / 50.0
     static let stateInLength = 400
 }
 
 
 class ModelPrediction{
-    let activityClassificationModel: changeFloorClassifier23 = try! changeFloorClassifier23(configuration: .init())
+    let activityClassificationModel: changeFloorClassifier27 = try! changeFloorClassifier27(configuration: .init())
     public var currentIndexInPredictionWindow: Int = 0
     
     let accelDataX = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
@@ -30,14 +30,15 @@ class ModelPrediction{
     
     let altitudeRelativeData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
     let differenceAltitudeRelativeData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
-    let pressureData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
+    let differencePressureData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
+    //let pressureData = try! MLMultiArray(shape: [ModelConstants.predictionWindowSize] as [NSNumber], dataType: MLMultiArrayDataType.double)
     
     var stateOutput = try! MLMultiArray(shape:[ModelConstants.stateInLength as NSNumber], dataType: MLMultiArrayDataType.double)
     
     
-    func performModelPrediction () -> changeFloorClassifier23Output? {
+    func performModelPrediction () -> changeFloorClassifier27Output? {
         // Perform model prediction
-        let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, altitude_pressure: pressureData, differenceAltitude: differenceAltitudeRelativeData, rotationRate_x: gyroDataX, rotationRate_y: gyroDataY, rotationRate_z:gyroDataZ, stateIn: stateOutput)
+        let modelPrediction = try! activityClassificationModel.prediction(acceleration_x: accelDataX, acceleration_y: accelDataY, acceleration_z: accelDataZ, differenceAltitude: differenceAltitudeRelativeData, differencePressure: differencePressureData, relativeAltitude: altitudeRelativeData, rotationRate_x:gyroDataX,rotationRate_y: gyroDataY, rotationRate_z: gyroDataZ, stateIn: stateOutput)
         
         // Update the state vector
         stateOutput = modelPrediction.stateOut
@@ -45,7 +46,7 @@ class ModelPrediction{
         return modelPrediction
     }
     
-    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativealtitude: Double, diffRelativealtitude: Double, pressure: Double) -> changeFloorClassifier23Output? {
+    func addSampleToDataArray (dataMotion: CMDeviceMotion, relativealtitude: Double, diffRelativealtitude: Double, diff_pressure: Double) -> changeFloorClassifier27Output? {
         // Add the current accelerometer reading to the data array
         accelDataX[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.x as NSNumber
         accelDataY[[currentIndexInPredictionWindow] as [NSNumber]] = dataMotion.userAcceleration.y as NSNumber
@@ -57,7 +58,8 @@ class ModelPrediction{
         
         altitudeRelativeData[[currentIndexInPredictionWindow] as [NSNumber]] = relativealtitude as NSNumber
         differenceAltitudeRelativeData[[currentIndexInPredictionWindow] as [NSNumber]] = diffRelativealtitude as NSNumber
-        pressureData[[currentIndexInPredictionWindow] as [NSNumber]] = pressure as NSNumber
+        differencePressureData[[currentIndexInPredictionWindow] as [NSNumber]] = diff_pressure as NSNumber
+        //pressureData[[currentIndexInPredictionWindow] as [NSNumber]] = pressure as NSNumber
         
         
         // Update the index in the prediction window data array
@@ -81,64 +83,94 @@ struct ContentView: View {
     let modelPredict = ModelPrediction()
     let motionManager = CMMotionManager()
     let altimeter = CMAltimeter()
-    @State var diffRelativealtitude: Double = 0.0
-    @State var relativealtitude: Double = 0.0
+    let height_in_meters = 0.2
+    @State var scarto_relative_height = 0.0
+    @State var diff_relative_altitude: Double = 0.0
+    @State var diff_pressure: Double = 0.0
+    @State var relative_altitude: Double = 0.0
     @State var prev_relative: Double = 0.0
-    @State var pressure: Double = 0.0
     @State var prev_pressure: Double = 0.0
     @State var firstTime = true
-    @State var firstTime_2 = true
+    @State var sensor_enable: Bool = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State var dict_prob: [String : Double] = ["mhhh":100]
     @State var label_predict: String = "mhhh"
+    @State var label_changed: String = "Non hai cambiato piano. "
+    @State var floor : Int = 0
+    
+    func check_floor() {
+        if abs(relative_altitude) > height_in_meters - (height_in_meters * 0.2){
+            print(relative_altitude, scarto_relative_height)
+            label_changed = "Hai cambiato piano usando \(label_predict). "
+            if relative_altitude > 0 {
+                floor = floor + 1
+            }else {
+                floor = floor - 1
+            }
+            scarto_relative_height = scarto_relative_height + relative_altitude
+            //relative_altitude = relative_altitude - scarto_relative_height
+        }
+    }
     
     func startSensors() {
         guard motionManager.isAccelerometerAvailable, motionManager.isGyroAvailable, motionManager.isDeviceMotionAvailable, CMAltimeter.isRelativeAltitudeAvailable() else { return }
         
-        //motionManager.accelerometerUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
-        //motionManager.gyroUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
+        motionManager.accelerometerUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
+        motionManager.gyroUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
         motionManager.deviceMotionUpdateInterval = TimeInterval(ModelConstants.sensorsUpdateInterval)
         
         altimeter.startRelativeAltitudeUpdates(to: .main){ dataAltimeter, error in
             guard let dataAltimeter = dataAltimeter else {  return }
+            relative_altitude = (dataAltimeter.relativeAltitude as! Double) - scarto_relative_height
+            let pressure = dataAltimeter.pressure as! Double
             
-            let tmp_altitude = dataAltimeter.relativeAltitude as! Double
-            relativealtitude = dataAltimeter.relativeAltitude as! Double
-            let tmp_pressure = dataAltimeter.pressure as! Double
-            
-            if firstTime_2 {
-                prev_relative = tmp_altitude
-                firstTime_2 = false
-            }
-            
-            if tmp_altitude - prev_relative != 0{
-                diffRelativealtitude = tmp_altitude - prev_relative
-                prev_relative = tmp_altitude
-            }
-            
-            if firstTime {
-                prev_pressure = tmp_pressure
+            if firstTime{
+                prev_pressure = pressure
+                prev_relative = relative_altitude
                 firstTime = false
-            }
-            
-            if tmp_pressure - prev_pressure != 0{
-                pressure = tmp_pressure - prev_pressure
-                prev_pressure = tmp_pressure
+            } else {
+                if relative_altitude !=  prev_relative{
+                    diff_relative_altitude = relative_altitude - prev_relative
+                    prev_relative = relative_altitude
+                }
+                
+                if pressure !=  prev_pressure {
+                    diff_pressure = pressure - prev_pressure
+                    prev_pressure = pressure
+                }
             }
         }
         
         motionManager.startDeviceMotionUpdates(to: .main){ dataMotion, error in
             guard let dataMotion = dataMotion else { return }
-            guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativealtitude: relativealtitude, diffRelativealtitude: diffRelativealtitude, pressure: pressure) else { return }
+            //print(dataMotion.userAcceleration.x, dataMotion.userAcceleration.y, dataMotion.userAcceleration.z)
+            guard let data = modelPredict.addSampleToDataArray(dataMotion: dataMotion, relativealtitude: relative_altitude, diffRelativealtitude: diff_relative_altitude, diff_pressure: diff_pressure) else { return }
             dict_prob = data.labelProbability
             label_predict = data.label
         }
         
     }
     
+    func stopSensor(){
+        motionManager.stopDeviceMotionUpdates()
+        altimeter.stopRelativeAltitudeUpdates()
+        modelPredict.currentIndexInPredictionWindow = 0
+        dict_prob = ["mhhh":100]
+        label_predict = "mhhh"
+    }
+    
     var body: some View {
         VStack{
             Text(String(label_predict))
+                .padding()
+            Text(label_changed + "Sei al piano: \(floor)")
+                .padding()
+                .onReceive(timer) { time in
+                                check_floor()
+                            }
+            Text("\(relative_altitude)")
+                .padding()
             List {
                 ForEach(dict_prob.sorted(by: >), id: \.key) { key, value in
                     Section(header: Text(key)) {
@@ -148,9 +180,19 @@ struct ContentView: View {
             }
             
             Button(action: {
-                self.startSensors()
+                if sensor_enable{
+                    self.stopSensor()
+                }else{
+                    self.startSensors()
+                }
+                
+                sensor_enable = !sensor_enable
             }) {
-                Text("Go")
+                if sensor_enable{
+                    Text("Stop")
+                }else{
+                    Text("Go")
+                }
             }
         }
     }

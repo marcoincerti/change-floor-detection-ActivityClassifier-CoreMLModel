@@ -7,8 +7,8 @@ The model tries to **classify** the raw data it captures at that instant using a
 - [x] Stay
 - [x] Climb
 - [x] Descend
-- [ ] Elevator up
-- [ ] Elevator down
+- [x] Elevator up
+- [x] Elevator down
   
 ## Step one: Data collection
 
@@ -33,3 +33,20 @@ The features I use to train the model are:
 - rotationRate y
 - rotationRate v
 - rotationRate z
+
+## Step three: Trainig my model
+I used Create ML to train and evaluate my model achieving a score of **91 percent. **
+
+**Layer Distribution:**
+- 2 x InnerProduct
+- 2 x ActivationReLU
+- 2 x Slice
+- 2 x Concat
+- 1 x Convolution
+- 1 x Reshape
+- 1 x UniDirectionalLSTM
+- 1 x BatchNorm
+- 1 x Softmax
+
+## Step four: Creation of a very simple app to use the model
+I created an app that using the model and relative height calculates what floor you are on starting from the ground floor and identifies how you moved.
