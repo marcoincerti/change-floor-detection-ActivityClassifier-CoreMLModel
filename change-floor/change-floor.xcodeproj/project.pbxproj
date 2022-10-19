@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8464BDF528FDFD230097CEDE /* changeFloorClassifier25.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8464BDF428FDFD220097CEDE /* changeFloorClassifier25.mlmodel */; };
-		8464BDF728FE087A0097CEDE /* changeFloorClassifier27.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8464BDF628FE087A0097CEDE /* changeFloorClassifier27.mlmodel */; };
-		8464BDF928FE0FE10097CEDE /* changeFloorClassifier26.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8464BDF828FE0FE00097CEDE /* changeFloorClassifier26.mlmodel */; };
+		84BCD071290051BF00BA38C7 /* changeFloorClassifier29.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 84BCD070290051BF00BA38C7 /* changeFloorClassifier29.mlmodel */; };
+		84BCD0732900551100BA38C7 /* changeFloorClassifier30.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 84BCD0722900551100BA38C7 /* changeFloorClassifier30.mlmodel */; };
 		84EB45F028B268F80030133A /* change_floorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45EF28B268F80030133A /* change_floorApp.swift */; };
 		84EB45F228B268F80030133A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB45F128B268F80030133A /* ContentView.swift */; };
 		84EB45F428B268FB0030133A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84EB45F328B268FB0030133A /* Assets.xcassets */; };
@@ -37,9 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8464BDF428FDFD220097CEDE /* changeFloorClassifier25.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier25.mlmodel; path = ../../changeFloorClassifier25.mlmodel; sourceTree = "<group>"; };
-		8464BDF628FE087A0097CEDE /* changeFloorClassifier27.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier27.mlmodel; path = ../../changeFloorClassifier27.mlmodel; sourceTree = "<group>"; };
-		8464BDF828FE0FE00097CEDE /* changeFloorClassifier26.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier26.mlmodel; path = ../../changeFloorClassifier26.mlmodel; sourceTree = "<group>"; };
+		84BCD070290051BF00BA38C7 /* changeFloorClassifier29.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier29.mlmodel; path = ../../changeFloorClassifier29.mlmodel; sourceTree = "<group>"; };
+		84BCD0722900551100BA38C7 /* changeFloorClassifier30.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = changeFloorClassifier30.mlmodel; path = ../../changeFloorClassifier30.mlmodel; sourceTree = "<group>"; };
 		84EB45EC28B268F80030133A /* change-floor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "change-floor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EB45EF28B268F80030133A /* change_floorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = change_floorApp.swift; sourceTree = "<group>"; };
 		84EB45F128B268F80030133A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,9 +98,8 @@
 		84EB45EE28B268F80030133A /* change-floor */ = {
 			isa = PBXGroup;
 			children = (
-				8464BDF428FDFD220097CEDE /* changeFloorClassifier25.mlmodel */,
-				8464BDF828FE0FE00097CEDE /* changeFloorClassifier26.mlmodel */,
-				8464BDF628FE087A0097CEDE /* changeFloorClassifier27.mlmodel */,
+				84BCD070290051BF00BA38C7 /* changeFloorClassifier29.mlmodel */,
+				84BCD0722900551100BA38C7 /* changeFloorClassifier30.mlmodel */,
 				84EB45EF28B268F80030133A /* change_floorApp.swift */,
 				84EB45F128B268F80030133A /* ContentView.swift */,
 				84EB45F328B268FB0030133A /* Assets.xcassets */,
@@ -267,10 +264,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				84EB45F228B268F80030133A /* ContentView.swift in Sources */,
-				8464BDF728FE087A0097CEDE /* changeFloorClassifier27.mlmodel in Sources */,
-				8464BDF528FDFD230097CEDE /* changeFloorClassifier25.mlmodel in Sources */,
 				84EB45F028B268F80030133A /* change_floorApp.swift in Sources */,
-				8464BDF928FE0FE10097CEDE /* changeFloorClassifier26.mlmodel in Sources */,
+				84BCD071290051BF00BA38C7 /* changeFloorClassifier29.mlmodel in Sources */,
+				84BCD0732900551100BA38C7 /* changeFloorClassifier30.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
